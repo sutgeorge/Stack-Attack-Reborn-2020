@@ -38,10 +38,16 @@ void Game::initialize_pipe() {
 }
 
 
+void Game::initialize_crane() {
+	this->crane = new Crane(this->renderer);
+}
+
+
 Game::Game() {
 	this->initialize_window();
 	this->initialize_renderer();
 	this->initialize_pipe();
+	this->initialize_crane();
 
 	if (this->initialization_failed) {
 		this->running = false;
@@ -56,6 +62,7 @@ Game::Game() {
 Game::~Game() {
 	//TODO: Avoid memory leaks by freeing memory used by SDL
 	delete this->pipe;
+	delete this->crane;
 }
 
 
@@ -63,6 +70,7 @@ void Game::render() {
 	if (SDL_GetTicks() - this->last_frame_update_time > 1000 / FPS) {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
+		this->crane->draw();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();
 	}
@@ -71,6 +79,7 @@ void Game::render() {
 
 void Game::run() {	
 	while (this->running) {
+		this->crane->slide();
 		this->render();	
 	}
 }

@@ -12,6 +12,7 @@ class Game {
 		Uint32 last_frame_update_time;
 		///-------------- Sprites ----------------
 		Pipe* pipe;	
+		Crane* crane;
 
     public:
         Game();
@@ -22,5 +23,6 @@ class Game {
 		void initialize_window();	
 		void initialize_renderer();	
 		void initialize_pipe();
+		void initialize_crane();
         void render();
 };

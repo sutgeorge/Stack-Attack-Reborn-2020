@@ -1,8 +1,8 @@
-OBJS = src/main.cpp src/game.cpp src/pipe.cpp
+OBJS = src/main.cpp src/game.cpp src/pipe.cpp src/crane.cpp
 
 CC = g++
 
-LINKER_FLAGS = -lSDL2 -lSDL2_image
+LINKER_FLAGS = -g -lSDL2 -lSDL2_image
 
 OBJ_NAME = StackAttack
 
