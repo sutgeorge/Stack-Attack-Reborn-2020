@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game() {
+void Game::initialize_window_and_renderer() {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(0, &dm);
@@ -23,5 +23,27 @@ Game::Game() {
 		return;
 	}
 
-	SDL_SetRenderDrawColor(this->renderer, DEFAULT_DRAW_COLOR);		
+	SDL_SetRenderDrawColor(this->renderer, DEFAULT_DRAW_COLOR);
+}
+
+Game::Game() {
+	this->initialize_window_and_renderer();
+	this->running = true;	
+	this->last_frame_update_time = SDL_GetTicks();
+}
+
+void Game::render() {
+	if (SDL_GetTicks() - this->last_frame_update_time > 1000 / FPS) {
+		SDL_RenderClear(this->renderer);
+
+		SDL_RenderPresent(this->renderer);
+		this->last_frame_update_time = SDL_GetTicks();
+	}
+}
+
+
+void Game::run() {	
+	while (this->running) {
+		this->render();	
+	}
 }
