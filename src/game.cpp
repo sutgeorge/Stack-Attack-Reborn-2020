@@ -77,7 +77,8 @@ void Game::render() {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
 		this->crane->draw();
-		this->block->draw();
+		this->block->draw();			
+		this->block_container.render_blocks();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();
 	}

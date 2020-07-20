@@ -11,4 +11,6 @@ class BlockContainer {
 		BlockContainer();	
 		void add_block(Block* block);
 		void remove_bottom_row();
+		void render_blocks();
+		int size();
 };

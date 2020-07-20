@@ -77,7 +77,9 @@ void Crane::out_of_frame_waiting_time() {
 
 void Crane::generate_crate() {
 	this->holds_a_block = true;
-	this->current_block = new Block(this->renderer, this->dstrect.x, this->dstrect.y);	
+	this->current_block = new Block(this->renderer, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
+	this->block_container->add_block(this->current_block);	
+	std::cout << "Block container size: " << this->block_container->size() << "\n";
 }
 
 

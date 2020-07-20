@@ -19,3 +19,15 @@ void BlockContainer::remove_bottom_row() {
 		}
 	}
 }
+
+
+void BlockContainer::render_blocks() {
+	for (auto block: container) {
+		block->draw();
+	}
+}
+
+
+int BlockContainer::size() {
+	return container.size();
+}
