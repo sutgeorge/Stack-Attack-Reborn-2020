@@ -50,7 +50,7 @@ void Crane::movement() {
 				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
 			}
 	
-			if (this->dstrect.x + this->dstrect.w < 0)
+			if (this->dstrect.x + this->dstrect.w < -2*this->dstrect.w)
 				this->currently_sliding = false;
 	
 			if (this->dstrect.x <= this->x_coordinate_of_the_drop_target) {
@@ -64,7 +64,7 @@ void Crane::movement() {
 				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
 			}
 
-			if (this->dstrect.x > WINDOW_WIDTH)
+			if (this->dstrect.x > WINDOW_WIDTH + 2*this->dstrect.w)
 				this->currently_sliding = false;
 
 			if (this->dstrect.x >= this->x_coordinate_of_the_drop_target) {
