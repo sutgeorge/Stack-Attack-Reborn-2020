@@ -39,6 +39,31 @@ void Block::fall() {
 }
 
 
+int Block::get_width() {
+	return this->dstrect.w;
+}
+
+
+int Block::get_x_coordinate() {
+	return this->dstrect.x;
+}
+
+
+int Block::get_y_coordinate() {
+	return this->dstrect.y;
+}
+
+
+void Block::set_x_coordinate(int new_x_coordinate) {
+	this->dstrect.x = new_x_coordinate;
+}
+
+
+void Block::set_y_coordinate(int new_y_coordinate) {
+	this->dstrect.y = new_y_coordinate;
+}
+
+
 Block::~Block() {
 			
 }

@@ -39,7 +39,7 @@ void Game::initialize_pipe() {
 
 
 void Game::initialize_crane() {
-	this->crane = new Crane(this->renderer);
+	this->crane = new Crane(this->renderer, &this->block_container);
 }
 
 

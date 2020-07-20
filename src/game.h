@@ -2,6 +2,7 @@
 #include "main.h"
 #include "constants.h"
 #include "sprites.h"
+#include "block_container.h"
 #include <pthread.h>
 
 class Game {
@@ -17,6 +18,7 @@ class Game {
 		Block* block;
 		///-------------- Threads ----------------
 		pthread_t crane_thread; 
+		BlockContainer block_container;
 
     public:
         Game();

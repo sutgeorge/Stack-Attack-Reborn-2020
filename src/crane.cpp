@@ -2,8 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
-Crane::Crane(SDL_Renderer* renderer) {
+Crane::Crane(SDL_Renderer* renderer, BlockContainer* block_container) {
 	int texture_w, texture_h;
+
 	this->renderer = renderer;
 	this->texture = IMG_LoadTexture(renderer, "res/crane.png");
 	SDL_QueryTexture(this->texture, NULL, NULL, &texture_w, &texture_h);
@@ -15,8 +16,11 @@ Crane::Crane(SDL_Renderer* renderer) {
 
 	this->last_crate_drop_time = this->last_slide_time = SDL_GetTicks();
 	this->currently_sliding = true;
+	this->holds_a_block = true;
 	this->direction = RIGHT;
-	this->current_block = NULL;
+
+	this->block_container = block_container;
+	this->generate_crate();
 }
 
 
@@ -40,7 +44,9 @@ void Crane::movement() {
 
 		if (this->direction == LEFT) {
 			this->dstrect.x -= CRANE_VELOCITY; 		
-
+			int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+			this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+			
 			if (this->dstrect.x + this->dstrect.w < 0)
 				this->currently_sliding = false;
 		} else {
@@ -63,8 +69,25 @@ void Crane::out_of_frame_waiting_time() {
 
 		std::cout << "done!\n";	
 		this->generate_new_position_and_direction();
+		this->generate_crate();
 		this->currently_sliding = true;	
 	}
+}
+
+
+void Crane::generate_crate() {
+	this->holds_a_block = true;
+	this->current_block = new Block(this->renderer, this->dstrect.x, this->dstrect.y);	
+}
+
+
+void Crane::drop_crate() {
+	/// Generate a random number between 0 and 12. (12 blocks can fit into the
+	/// width of the window). Then set the x coordinate of the target to be 
+	/// the random_int * block_width.			
+	srand(time(NULL));
+	int random_int = rand() % 12;
+	this->x_coordinate_of_the_drop_target = random_int * this->current_block->get_width();	
 }
 
 
