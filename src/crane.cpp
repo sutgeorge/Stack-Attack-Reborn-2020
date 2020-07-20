@@ -34,26 +34,26 @@ void Crane::generate_new_position_and_direction() {
 }
 
 
-void Crane::slide() {
-	///TODO: Separate this if statement and place it in a new method called "movement"
+void Crane::movement() {	
 	if (this->currently_sliding && SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
 		this->last_slide_time = SDL_GetTicks(); 
 
 		if (this->direction == LEFT) {
 			this->dstrect.x -= CRANE_VELOCITY; 		
 
-			if (this->dstrect.x + this->dstrect.w < 0) {
+			if (this->dstrect.x + this->dstrect.w < 0)
 				this->currently_sliding = false;
-			}
 		} else {
 			this->dstrect.x += CRANE_VELOCITY; 	
 
-			if (this->dstrect.x > WINDOW_WIDTH) {
+			if (this->dstrect.x > WINDOW_WIDTH)
 				this->currently_sliding = false;
-			}
 		}
 	}
+}
 
+
+void Crane::out_of_frame_waiting_time() {
 	if (!this->currently_sliding) {
 		/// When the crane goes out of the frame of the window, it waits
 		/// 3 seconds.	
@@ -65,6 +65,12 @@ void Crane::slide() {
 		this->generate_new_position_and_direction();
 		this->currently_sliding = true;	
 	}
+}
+
+
+void Crane::slide() {
+	this->movement();	
+	this->out_of_frame_waiting_time();
 }
 
 

@@ -16,6 +16,8 @@ class Crane {
 		Crane(SDL_Renderer* renderer);	
 		void draw();
 		void slide();
+		void movement();
+		void out_of_frame_waiting_time();
 		void generate_new_position_and_direction();
 		static void* handle_thread(void* arg);
 };
