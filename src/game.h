@@ -2,6 +2,7 @@
 #include "main.h"
 #include "constants.h"
 #include "sprites.h"
+#include <pthread.h>
 
 class Game {
     private:
@@ -14,6 +15,8 @@ class Game {
 		Pipe* pipe;	
 		Crane* crane;
 		Block* block;
+		///-------------- Threads ----------------
+		pthread_t crane_thread; 
 
     public:
         Game();

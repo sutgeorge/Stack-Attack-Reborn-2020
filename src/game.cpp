@@ -85,9 +85,11 @@ void Game::render() {
 
 
 void Game::run() {	
+	pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
 	while (this->running) {
-		this->crane->slide();
 		this->block->fall();
 		this->render();	
 	}
+	std::cout << "while loop stopped.\n"; 
+	pthread_join(this->crane_thread, NULL);
 }

@@ -12,19 +12,13 @@ Crane::Crane(SDL_Renderer* renderer) {
 	this->dstrect.y = 0;
 
 	this->last_crate_drop_time = this->last_slide_time = SDL_GetTicks();
-	this->currently_sliding = false;
+	this->currently_sliding = true;
 	this->direction = RIGHT;
-
-	//this->current_block = NULL;
+	this->current_block = NULL;
 }
 
 
 void Crane::slide() {
-	/**
-	if (!this->currently_sliding)
-		return;
-	**/
-
 	if (SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
 		std::cout << "Crane::slide running...\n";
 		this->last_slide_time = SDL_GetTicks(); 
@@ -33,11 +27,22 @@ void Crane::slide() {
 			this->dstrect.x -= CRANE_VELOCITY; 	
 		} else {
 			this->dstrect.x += CRANE_VELOCITY; 	
-		}	
-	}	
+		}
+	}
 }
 
 
 void Crane::draw() {
 	SDL_RenderCopy(this->renderer, this->texture, NULL, &this->dstrect);		
 } 
+
+
+void* Crane::handle_thread(void* arg) {
+	Crane* crane = (Crane*)arg;
+		
+	while (crane->currently_sliding) {
+		crane->slide();	
+	}		
+	
+	return NULL;
+}
