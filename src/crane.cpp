@@ -19,15 +19,33 @@ Crane::Crane(SDL_Renderer* renderer) {
 
 
 void Crane::slide() {
-	if (SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
-		std::cout << "Crane::slide running...\n";
+
+	if (this->currently_sliding && SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
 		this->last_slide_time = SDL_GetTicks(); 
 
 		if (this->direction == LEFT) {
-			this->dstrect.x -= CRANE_VELOCITY; 	
+			this->dstrect.x -= CRANE_VELOCITY; 		
+
+			if (this->dstrect.x - this->dstrect.w < 0) {
+				this->currently_sliding = false;
+			}
 		} else {
 			this->dstrect.x += CRANE_VELOCITY; 	
+
+			if (this->dstrect.x > WINDOW_WIDTH) {
+				this->currently_sliding = false;
+			}
 		}
+	}
+
+	if (!this->currently_sliding) {
+		/// When the crane goes out of the frame of the window, it waits
+		/// 3 seconds.	
+		std::cout << "waiting...\n";	
+		Uint32 out_of_frame_waiting_time = SDL_GetTicks();	
+		while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
+
+		std::cout << "done!\n";	
 	}
 }
 
