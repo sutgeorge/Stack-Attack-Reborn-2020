@@ -74,6 +74,8 @@ Game::~Game() {
 	delete this->block;
 	delete this->block_container;
 	delete this->textures;
+	SDL_DestroyWindow(this->window);
+	SDL_Quit();
 }
 
 
