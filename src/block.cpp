@@ -36,6 +36,8 @@ void Block::fall() {
 		this->dstrect.y = WINDOW_HEIGHT - this->dstrect.h;	
 		this->falling = false;
 	}
+	
+	std::cout << "Current block's y coordinate: " << this->dstrect.y << "\n";
 }
 
 
@@ -61,6 +63,25 @@ void Block::set_x_coordinate(int new_x_coordinate) {
 
 void Block::set_y_coordinate(int new_y_coordinate) {
 	this->dstrect.y = new_y_coordinate;
+}
+
+
+bool Block::is_falling() {
+	return this->falling;
+}
+
+
+void* Block::handle_falling_thread(void* arg) {
+	Block* block = (Block*)arg;
+
+	while (block->is_falling()) {
+		block->fall();
+	}
+}
+
+
+void Block::set_as_falling() {
+	this->falling = true;
 }
 
 

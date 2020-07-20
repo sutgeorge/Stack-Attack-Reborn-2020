@@ -45,20 +45,35 @@ void Crane::movement() {
 
 		if (this->direction == LEFT) {
 			this->dstrect.x -= CRANE_VELOCITY; 		
-			int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
-			this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
-			
+			if (this->holds_a_block) {	
+				int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+			}
+	
 			if (this->dstrect.x + this->dstrect.w < 0)
 				this->currently_sliding = false;
+	
+			if (this->dstrect.x <= this->x_coordinate_of_the_drop_target) {
+				this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
+				this->drop_crate();	
+			}		
 		} else {
 			this->dstrect.x += CRANE_VELOCITY; 	
-			int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
-			this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+			if (this->holds_a_block) {	
+				int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+			}
 
 			if (this->dstrect.x > WINDOW_WIDTH)
 				this->currently_sliding = false;
+
+			if (this->dstrect.x >= this->x_coordinate_of_the_drop_target) {
+				this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
+				this->drop_crate();	
+			}		
 		}
 	}
+
 }
 
 
@@ -68,7 +83,7 @@ void Crane::out_of_frame_waiting_time() {
 		/// 3 seconds.	
 		std::cout << "waiting...\n";	
 		Uint32 out_of_frame_waiting_time = SDL_GetTicks();	
-		while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
+		//while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
 
 		std::cout << "done!\n";	
 		this->generate_new_position_and_direction();
@@ -82,7 +97,13 @@ void Crane::generate_crate() {
 	this->holds_a_block = true;
 	this->current_block = new Block(this->renderer, this->textures, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
 	this->block_container->add_block(this->current_block);	
-	std::cout << "Block container size: " << this->block_container->size() << "\n";
+
+	//int possible_block_x_coordinates[] = {0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704};
+	srand(time(NULL));
+	int random_int = rand() % 12;
+	std::cout << "Random int from Crane::generate_crate(): " << random_int << "\n";
+	//this->x_coordinate_of_the_drop_target = possible_block_x_coordinates[random_int];
+	this->x_coordinate_of_the_drop_target = random_int * this->current_block->get_width();
 }
 
 
@@ -90,9 +111,9 @@ void Crane::drop_crate() {
 	/// Generate a random number between 0 and 12. (12 blocks can fit into the
 	/// width of the window). Then set the x coordinate of the target to be 
 	/// the random_int * block_width.			
-	srand(time(NULL));
-	int random_int = rand() % 12;
-	this->x_coordinate_of_the_drop_target = random_int * this->current_block->get_width();	
+	/// Should be called in Crane::movement.
+	this->current_block->fall();
+	this->holds_a_block = false;		
 }
 
 
@@ -107,12 +128,19 @@ void Crane::draw() {
 } 
 
 
+static pthread_mutex_t crane_mutex; 
+
 void* Crane::handle_thread(void* arg) {
 	Crane* crane = (Crane*)arg;
+	pthread_mutex_init(&crane_mutex, NULL); 		
 		
 	while (crane->currently_sliding) {
+		pthread_mutex_lock(&crane_mutex);					
 		crane->slide();	
+		pthread_mutex_unlock(&crane_mutex);					
 	}		
 	
+	pthread_mutex_destroy(&crane_mutex);
 	return NULL;
 }
+

@@ -21,5 +21,8 @@ class Block {
 		int get_y_coordinate();
 		void set_x_coordinate(int new_x_coordinate);
 		void set_y_coordinate(int new_y_coordinate);
+		bool is_falling();
+		void set_as_falling();
+		static void* handle_falling_thread(void* arg);
 		~Block();
 };

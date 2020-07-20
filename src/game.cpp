@@ -45,7 +45,7 @@ void Game::initialize_crane() {
 
 void Game::initialize_test_block() {
 	this->block = new Block(this->renderer, this->textures, 0, 0);
-	this->block_container->add_block(this->block);
+	//this->block_container->add_block(this->block);
 }
 
 
@@ -72,6 +72,7 @@ Game::~Game() {
 	//TODO: Avoid memory leaks by freeing memory used by SDL
 	delete this->pipe;
 	delete this->crane;
+	delete this->block;
 	delete this->block_container;
 	delete this->textures;
 }
@@ -82,7 +83,6 @@ void Game::render() {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
 		this->crane->draw();
-		//this->block->draw();			
 		this->block_container->render_blocks();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();
@@ -93,7 +93,7 @@ void Game::render() {
 void Game::run() {	
 	pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
 	while (this->running) {
-		this->block->fall();
+		//this->block->fall();
 		this->render();	
 	}
 	std::cout << "while loop stopped.\n"; 
