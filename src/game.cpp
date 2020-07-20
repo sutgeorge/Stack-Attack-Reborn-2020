@@ -45,7 +45,6 @@ void Game::initialize_crane() {
 
 void Game::initialize_test_block() {
 	this->block = new Block(this->renderer, this->textures, 0, 0);
-	//this->block_container->add_block(this->block);
 }
 
 
@@ -93,7 +92,6 @@ void Game::render() {
 void Game::run() {	
 	pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
 	while (this->running) {
-		//this->block->fall();
 		this->render();	
 	}
 	std::cout << "while loop stopped.\n"; 

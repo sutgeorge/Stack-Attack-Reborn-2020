@@ -83,7 +83,7 @@ void Crane::out_of_frame_waiting_time() {
 		/// 3 seconds.	
 		std::cout << "waiting...\n";	
 		Uint32 out_of_frame_waiting_time = SDL_GetTicks();	
-		//while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
+		while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
 
 		std::cout << "done!\n";	
 		this->generate_new_position_and_direction();
@@ -98,20 +98,14 @@ void Crane::generate_crate() {
 	this->current_block = new Block(this->renderer, this->textures, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
 	this->block_container->add_block(this->current_block);	
 
-	//int possible_block_x_coordinates[] = {0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704};
 	srand(time(NULL));
 	int random_int = rand() % 12;
 	std::cout << "Random int from Crane::generate_crate(): " << random_int << "\n";
-	//this->x_coordinate_of_the_drop_target = possible_block_x_coordinates[random_int];
 	this->x_coordinate_of_the_drop_target = random_int * this->current_block->get_width();
 }
 
 
 void Crane::drop_crate() {
-	/// Generate a random number between 0 and 12. (12 blocks can fit into the
-	/// width of the window). Then set the x coordinate of the target to be 
-	/// the random_int * block_width.			
-	/// Should be called in Crane::movement.
 	this->current_block->fall();
 	this->holds_a_block = false;		
 }
