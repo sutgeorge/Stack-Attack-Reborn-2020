@@ -1,0 +1,21 @@
+#include "block_container.h"
+
+BlockContainer::BlockContainer() {}
+
+
+void BlockContainer::add_block(Block* block) {
+	this->container.push_back(block);	
+}
+
+
+void BlockContainer::remove_bottom_row() {
+	std::vector<Block*>::iterator it = container.begin();
+
+	while(it != container.end()) {
+		if ((*it)->get_y_coordinate() == WINDOW_HEIGHT - (*it)->get_width()) {
+			it = container.erase(it);
+		} else { 
+			it++;
+		}
+	}
+}
