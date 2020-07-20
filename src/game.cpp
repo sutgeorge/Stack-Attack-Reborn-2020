@@ -68,7 +68,6 @@ Game::Game() {
 
 
 Game::~Game() {
-	//TODO: Avoid memory leaks by freeing memory used by SDL
 	delete this->pipe;
 	delete this->crane;
 	delete this->block;
