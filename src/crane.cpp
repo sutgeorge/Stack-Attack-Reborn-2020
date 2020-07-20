@@ -1,4 +1,6 @@
 #include "crane.h"
+#include <cstdlib>
+#include <ctime>
 
 Crane::Crane(SDL_Renderer* renderer) {
 	int texture_w, texture_h;
@@ -18,15 +20,29 @@ Crane::Crane(SDL_Renderer* renderer) {
 }
 
 
-void Crane::slide() {
+void Crane::generate_new_position_and_direction() {
+	srand(time(NULL));
+	int random_int = rand() % 2;
 
+	if (!random_int) {
+		this->direction = LEFT;
+		this->dstrect.x = WINDOW_WIDTH + this->dstrect.w;
+	} else {
+		this->direction = RIGHT;
+		this->dstrect.x = -this->dstrect.w;
+	}	
+}
+
+
+void Crane::slide() {
+	///TODO: Separate this if statement and place it in a new method called "movement"
 	if (this->currently_sliding && SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
 		this->last_slide_time = SDL_GetTicks(); 
 
 		if (this->direction == LEFT) {
 			this->dstrect.x -= CRANE_VELOCITY; 		
 
-			if (this->dstrect.x - this->dstrect.w < 0) {
+			if (this->dstrect.x + this->dstrect.w < 0) {
 				this->currently_sliding = false;
 			}
 		} else {
@@ -46,6 +62,8 @@ void Crane::slide() {
 		while (SDL_GetTicks() - out_of_frame_waiting_time < 3000){}	
 
 		std::cout << "done!\n";	
+		this->generate_new_position_and_direction();
+		this->currently_sliding = true;	
 	}
 }
 
