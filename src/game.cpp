@@ -43,11 +43,17 @@ void Game::initialize_crane() {
 }
 
 
+void Game::initialize_test_block() {
+	this->block = new Block(this->renderer, 0, 0);
+}
+
+
 Game::Game() {
 	this->initialize_window();
 	this->initialize_renderer();
 	this->initialize_pipe();
 	this->initialize_crane();
+	this->initialize_test_block();	
 
 	if (this->initialization_failed) {
 		this->running = false;
@@ -71,6 +77,7 @@ void Game::render() {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
 		this->crane->draw();
+		this->block->draw();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();
 	}
@@ -80,6 +87,7 @@ void Game::render() {
 void Game::run() {	
 	while (this->running) {
 		this->crane->slide();
+		this->block->fall();
 		this->render();	
 	}
 }

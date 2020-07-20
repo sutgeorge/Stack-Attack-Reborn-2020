@@ -13,6 +13,7 @@ class Game {
 		///-------------- Sprites ----------------
 		Pipe* pipe;	
 		Crane* crane;
+		Block* block;
 
     public:
         Game();
@@ -24,5 +25,6 @@ class Game {
 		void initialize_renderer();	
 		void initialize_pipe();
 		void initialize_crane();
+		void initialize_test_block();
         void render();
 };
