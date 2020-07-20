@@ -1,6 +1,7 @@
 #pragma once
 #include "main.h"
 
+
 class Block {
 	private:	
 		SDL_Texture *texture;
@@ -9,9 +10,10 @@ class Block {
 		int falling_velocity;
 		bool falling; 
 		Uint32 last_fall_time;
+		Textures* textures;
 
 	public:
-		Block(SDL_Renderer* renderer, int x, int y);
+		Block(SDL_Renderer* renderer, Textures* textures, int x, int y);
 		void draw();
 		void fall();
 		int get_width();

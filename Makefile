@@ -1,4 +1,4 @@
-OBJS = src/main.cpp src/game.cpp src/pipe.cpp src/crane.cpp src/block.cpp src/block_container.cpp
+OBJS = src/main.cpp src/game.cpp src/pipe.cpp src/crane.cpp src/block.cpp src/block_container.cpp src/textures.cpp
 
 CC = g++
 

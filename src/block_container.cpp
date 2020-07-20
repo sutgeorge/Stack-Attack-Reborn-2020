@@ -1,6 +1,8 @@
 #include "block_container.h"
 
-BlockContainer::BlockContainer() {}
+BlockContainer::BlockContainer(SDL_Renderer* renderer) {
+	this->renderer = renderer;
+}
 
 
 void BlockContainer::add_block(Block* block) {

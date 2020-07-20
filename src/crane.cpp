@@ -2,11 +2,12 @@
 #include <cstdlib>
 #include <ctime>
 
-Crane::Crane(SDL_Renderer* renderer, BlockContainer* block_container) {
+Crane::Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container) {
 	int texture_w, texture_h;
 
 	this->renderer = renderer;
-	this->texture = IMG_LoadTexture(renderer, "res/crane.png");
+	this->texture = textures->crane_texture;
+	this->textures = textures;
 	SDL_QueryTexture(this->texture, NULL, NULL, &texture_w, &texture_h);
 
 	this->dstrect.w = texture_w;
@@ -51,6 +52,8 @@ void Crane::movement() {
 				this->currently_sliding = false;
 		} else {
 			this->dstrect.x += CRANE_VELOCITY; 	
+			int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+			this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
 
 			if (this->dstrect.x > WINDOW_WIDTH)
 				this->currently_sliding = false;
@@ -77,7 +80,7 @@ void Crane::out_of_frame_waiting_time() {
 
 void Crane::generate_crate() {
 	this->holds_a_block = true;
-	this->current_block = new Block(this->renderer, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
+	this->current_block = new Block(this->renderer, this->textures, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
 	this->block_container->add_block(this->current_block);	
 	std::cout << "Block container size: " << this->block_container->size() << "\n";
 }

@@ -14,9 +14,10 @@ class Crane {
 		Block* current_block;
 		int x_coordinate_of_the_drop_target;
 		BlockContainer* block_container;		
+		Textures* textures;
 
 	public:
-		Crane(SDL_Renderer* renderer, BlockContainer* block_container);	
+		Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container);	
 		void draw();
 		void slide();
 		void movement();

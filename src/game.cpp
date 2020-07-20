@@ -39,18 +39,21 @@ void Game::initialize_pipe() {
 
 
 void Game::initialize_crane() {
-	this->crane = new Crane(this->renderer, &this->block_container);
+	this->crane = new Crane(this->renderer, this->textures, this->block_container);
 }
 
 
 void Game::initialize_test_block() {
-	this->block = new Block(this->renderer, 0, 0);
+	this->block = new Block(this->renderer, this->textures, 0, 0);
+	this->block_container->add_block(this->block);
 }
 
 
 Game::Game() {
 	this->initialize_window();
 	this->initialize_renderer();
+	this->textures = new Textures(this->renderer);
+	this->block_container = new BlockContainer(this->renderer);	
 	this->initialize_pipe();
 	this->initialize_crane();
 	this->initialize_test_block();	
@@ -59,7 +62,7 @@ Game::Game() {
 		this->running = false;
 		return;
 	}
-
+		
 	this->running = true;	
 	this->last_frame_update_time = SDL_GetTicks();
 }
@@ -69,6 +72,8 @@ Game::~Game() {
 	//TODO: Avoid memory leaks by freeing memory used by SDL
 	delete this->pipe;
 	delete this->crane;
+	delete this->block_container;
+	delete this->textures;
 }
 
 
@@ -77,8 +82,8 @@ void Game::render() {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
 		this->crane->draw();
-		this->block->draw();			
-		this->block_container.render_blocks();
+		//this->block->draw();			
+		this->block_container->render_blocks();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();
 	}

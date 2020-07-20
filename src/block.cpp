@@ -1,10 +1,10 @@
 #include "block.h"
 
-Block::Block(SDL_Renderer* renderer, int x, int y) {	
+Block::Block(SDL_Renderer* renderer, Textures* textures, int x, int y) {	
 	int texture_w, texture_h;
 
 	this->renderer = renderer;
-	this->texture = IMG_LoadTexture(renderer, "res/block.png");
+	this->texture = textures->block_texture;
 	SDL_QueryTexture(this->texture, NULL, NULL, &texture_w, &texture_h);
 
 	this->dstrect.x = x;
