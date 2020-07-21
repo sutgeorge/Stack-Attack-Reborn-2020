@@ -22,6 +22,8 @@ class Crane {
 		void draw();
 		void slide();
 		void movement();
+		void move_to_left();
+		void move_to_right();
 		void out_of_frame_waiting_time();
 		void generate_new_position_and_direction();
 		void drop_crate();

@@ -39,38 +39,55 @@ void Crane::generate_new_position_and_direction() {
 }
 
 
+void Crane::move_to_left() {
+	this->dstrect.x -= CRANE_VELOCITY; 		
+
+	if (this->holds_a_block) {	
+		int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+		this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+	}
+	
+	/// The value is -2*this->dstrect.w instead of 0 because the crane thread
+	/// also handles the block fall method. If it was 0, then both the crane and the
+	/// block falling would stop.
+	if (this->dstrect.x + this->dstrect.w < -2*this->dstrect.w)
+		this->currently_sliding = false;
+
+	if (this->dstrect.x <= this->x_coordinate_of_the_drop_target) {
+		this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
+		this->drop_crate();	
+	}		
+}
+
+
+void Crane::move_to_right() {
+	this->dstrect.x += CRANE_VELOCITY; 	
+	if (this->holds_a_block) {	
+		int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
+		this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
+	}
+
+	/// The value is WINDOW_WIDTH + 2*this->dstrect.w instead of WINDOW_WIDTH because 
+	/// the crane thread also handles the block fall method. If it was 0, then both 
+	/// the crane and the block falling would stop.
+	if (this->dstrect.x > WINDOW_WIDTH + 2*this->dstrect.w)
+		this->currently_sliding = false;
+
+	if (this->dstrect.x >= this->x_coordinate_of_the_drop_target) {
+		this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
+		this->drop_crate();	
+	}		
+}
+
+
 void Crane::movement() {	
 	if (this->currently_sliding && SDL_GetTicks() - this->last_slide_time > 1000 / FPS) {
 		this->last_slide_time = SDL_GetTicks(); 
 
 		if (this->direction == LEFT) {
-			this->dstrect.x -= CRANE_VELOCITY; 		
-			if (this->holds_a_block) {	
-				int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
-				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
-			}
-	
-			if (this->dstrect.x + this->dstrect.w < -2*this->dstrect.w)
-				this->currently_sliding = false;
-	
-			if (this->dstrect.x <= this->x_coordinate_of_the_drop_target) {
-				this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
-				this->drop_crate();	
-			}		
+			this->move_to_left();
 		} else {
-			this->dstrect.x += CRANE_VELOCITY; 	
-			if (this->holds_a_block) {	
-				int x_coordinate_of_block_while_moving = this->dstrect.x + this->dstrect.w / 2- this->current_block->get_width() / 2;  
-				this->current_block->set_x_coordinate(x_coordinate_of_block_while_moving);	
-			}
-
-			if (this->dstrect.x > WINDOW_WIDTH + 2*this->dstrect.w)
-				this->currently_sliding = false;
-
-			if (this->dstrect.x >= this->x_coordinate_of_the_drop_target) {
-				this->current_block->set_x_coordinate(this->x_coordinate_of_the_drop_target);
-				this->drop_crate();	
-			}		
+			this->move_to_right();
 		}
 	}
 
