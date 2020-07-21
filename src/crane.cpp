@@ -68,8 +68,8 @@ void Crane::move_to_right() {
 	}
 
 	/// The value is WINDOW_WIDTH + 2*this->dstrect.w instead of WINDOW_WIDTH because 
-	/// the crane thread also handles the block fall method. If it was 0, then both 
-	/// the crane and the block falling would stop.
+	/// the crane thread also handles the block fall method. If it was WINDOW_WIDTH, 
+	/// then both the crane and the block falling would stop.
 	if (this->dstrect.x > WINDOW_WIDTH + 2*this->dstrect.w)
 		this->currently_sliding = false;
 
