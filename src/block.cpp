@@ -71,15 +71,6 @@ bool Block::is_falling() {
 }
 
 
-void* Block::handle_falling_thread(void* arg) {
-	Block* block = (Block*)arg;
-
-	while (block->is_falling()) {
-		block->fall();
-	}
-}
-
-
 void Block::set_as_falling() {
 	this->falling = true;
 }

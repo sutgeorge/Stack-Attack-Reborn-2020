@@ -23,6 +23,5 @@ class Block {
 		void set_y_coordinate(int new_y_coordinate);
 		bool is_falling();
 		void set_as_falling();
-		static void* handle_falling_thread(void* arg);
 		~Block();
 };
