@@ -92,10 +92,14 @@ void Game::render() {
 
 
 void Game::run() {	
-	pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
+	//pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
+	this->crane_thread = SDL_CreateThread(Crane::handle_thread, "Crane thread", this->crane);		
+	
 	while (this->running) {
-		this->render();	
+		this->render();			
 	}
+
 	std::cout << "while loop stopped.\n"; 
-	pthread_join(this->crane_thread, NULL);
+	//pthread_join(this->crane_thread, NULL);	
+	SDL_WaitThread(this->crane_thread, NULL);
 }

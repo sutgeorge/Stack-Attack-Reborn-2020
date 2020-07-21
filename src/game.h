@@ -4,7 +4,8 @@
 #include "sprites.h"
 #include "block_container.h"
 #include "textures.h"
-#include <pthread.h>
+//#include <pthread.h>
+#include <SDL2/SDL_thread.h>
 
 class Game {
     private:
@@ -19,7 +20,9 @@ class Game {
 		Crane* crane;
 		Block* block;
 		///-------------- Threads ----------------
-		pthread_t crane_thread; 
+		///pthread_t crane_thread; 
+		SDL_Thread* crane_thread;
+		///-------------- Other ------------------
 		BlockContainer* block_container;
 
     public:

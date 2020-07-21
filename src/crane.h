@@ -2,7 +2,8 @@
 #include "main.h"
 #include "block.h"
 #include "block_container.h"
-#include <pthread.h>
+///#include <pthread.h>
+#include <SDL2/SDL_thread.h>
 
 class Crane {
 	private:
@@ -28,5 +29,5 @@ class Crane {
 		void generate_new_position_and_direction();
 		void drop_crate();
 		void generate_crate();
-		static void* handle_thread(void* arg);
+		static int handle_thread(void* arg);
 };

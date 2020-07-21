@@ -140,13 +140,13 @@ void Crane::draw() {
 
 
 
-void* Crane::handle_thread(void* arg) {
+int Crane::handle_thread(void* arg) {
 	Crane* crane = (Crane*)arg;
 		
 	while (crane->currently_sliding) {
 		crane->slide();	
 	}		
 	
-	return NULL;
+	return 0;
 }
 
