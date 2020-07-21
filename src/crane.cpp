@@ -139,19 +139,14 @@ void Crane::draw() {
 } 
 
 
-static pthread_mutex_t crane_mutex; 
 
 void* Crane::handle_thread(void* arg) {
 	Crane* crane = (Crane*)arg;
-	pthread_mutex_init(&crane_mutex, NULL); 		
 		
 	while (crane->currently_sliding) {
-		pthread_mutex_lock(&crane_mutex);					
 		crane->slide();	
-		pthread_mutex_unlock(&crane_mutex);					
 	}		
 	
-	pthread_mutex_destroy(&crane_mutex);
 	return NULL;
 }
 
