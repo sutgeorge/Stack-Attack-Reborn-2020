@@ -6,19 +6,19 @@ CollisionDetector::CollisionDetector(BlockContainer* block_container) {
 
 
 bool CollisionDetector::collision_between_two_blocks(Block* first_block, Block* second_block) {	
-	int first_block_top = first_block->get_y_coordinate();
-	int first_block_bottom = first_block->get_y_coordinate() + first_block->get_width();	
 	int first_block_left = first_block->get_x_coordinate();
-	int first_block_right = first_block->get_x_coordinate() + first_block->get_width();
-	int second_block_top = second_block->get_y_coordinate();
-	int second_block_bottom = second_block->get_y_coordinate() + second_block->get_width();	
-	int second_block_left = second_block->get_x_coordinate();
-	int second_block_right = second_block->get_x_coordinate() + second_block->get_width();
+	int first_block_top = first_block->get_y_coordinate(); 
+	int block_width = first_block->get_width();
+	int first_block_bottom = first_block_top + block_width; 	
+	int first_block_right = first_block_left + block_width;
+	
+	int second_block_left = second_block->get_x_coordinate();	
+	int second_block_top = second_block->get_y_coordinate();	
+	int second_block_bottom = second_block_top + block_width;	
+	int second_block_right = second_block_left + block_width;
 
-	if (first_block_left < second_block_right && first_block_right > second_block_left &&
-	    first_block_top < second_block_bottom && first_block_bottom > second_block_top) {
+	if (first_block_left < second_block_right && first_block_right > second_block_left && first_block_top < second_block_bottom && first_block_bottom > second_block_top)
 		return true;
-	}
 	return false;
 }
 
