@@ -33,6 +33,7 @@ bool CollisionDetector::bottom_side_collision_of_block_in_motion(Block* block, i
 	
 		if ((*block_container_it)->get_x_coordinate() == x_coordinate_of_landing_position) {
 			if (CollisionDetector::collision_between_two_blocks(block, (*block_container_it))) {
+				block->set_y_coordinate((*block_container_it)->get_y_coordinate() - block->get_width());
 				return true;
 			}
 		}	

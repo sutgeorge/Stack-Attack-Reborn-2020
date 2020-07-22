@@ -128,7 +128,7 @@ void Crane::drop_crate() {
 	this->current_block->fall();
 
 	if (this->collision_detector->bottom_side_collision_of_block_in_motion(this->current_block, this->x_coordinate_of_the_drop_target)) {
-		this->current_block->set_as_landed();					
+		this->current_block->set_as_landed();						
 	}
 
 	/// TODO: Check collision between the current block held by the crane and other blocks
