@@ -76,6 +76,11 @@ void Block::set_as_falling() {
 }
 
 
+void Block::set_as_landed() {
+	this->falling = false;
+}
+
+
 Block::~Block() {
 			
 }

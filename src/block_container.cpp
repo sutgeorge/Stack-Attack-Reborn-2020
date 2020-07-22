@@ -33,3 +33,9 @@ void BlockContainer::render_blocks() {
 int BlockContainer::size() {
 	return container.size();
 }
+
+
+std::vector<Block*>* BlockContainer::get_pointer_to_container() {
+	return &container;
+}
+

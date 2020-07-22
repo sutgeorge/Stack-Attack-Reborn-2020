@@ -22,6 +22,8 @@ Crane::Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_c
 
 	this->block_container = block_container;
 	this->generate_crate();
+
+	this->collision_detector = new CollisionDetector(block_container);
 }
 
 
@@ -124,6 +126,13 @@ void Crane::generate_crate() {
 
 void Crane::drop_crate() {
 	this->current_block->fall();
+
+	if (this->collision_detector->bottom_side_collision_of_block_in_motion(this->current_block, this->x_coordinate_of_the_drop_target)) {
+		this->current_block->set_as_landed();					
+	}
+
+	/// TODO: Check collision between the current block held by the crane and other blocks
+	/// placed under the current one.
 	this->holds_a_block = false;		
 }
 
@@ -150,3 +159,12 @@ int Crane::handle_thread(void* arg) {
 	return 0;
 }
 
+
+void Crane::set_collision_detector(CollisionDetector* collision_detector) {
+	this->collision_detector = collision_detector;
+}
+
+
+Crane::~Crane() {
+	delete this->collision_detector;
+}

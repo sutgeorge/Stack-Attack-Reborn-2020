@@ -1,4 +1,5 @@
 #include "game.h"
+#include "collisiondetector.h"
 
 void Game::initialize_window() {
 	this->initialization_failed = false;

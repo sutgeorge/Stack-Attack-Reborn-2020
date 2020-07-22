@@ -2,6 +2,7 @@
 #include "main.h"
 #include "block.h"
 #include <vector>
+#include <iterator>
 
 class BlockContainer {
 	private:
@@ -13,5 +14,6 @@ class BlockContainer {
 		void add_block(Block* block);
 		void remove_bottom_row();
 		void render_blocks();
+		std::vector<Block*>* get_pointer_to_container();
 		int size();
 };

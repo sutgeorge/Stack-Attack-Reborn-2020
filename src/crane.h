@@ -2,6 +2,7 @@
 #include "main.h"
 #include "block.h"
 #include "block_container.h"
+#include "collisiondetector.h"
 ///#include <pthread.h>
 #include <SDL2/SDL_thread.h>
 
@@ -17,6 +18,7 @@ class Crane {
 		int x_coordinate_of_the_drop_target;
 		BlockContainer* block_container;		
 		Textures* textures;
+		CollisionDetector* collision_detector;	
 
 	public:
 		Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container);	
@@ -29,5 +31,7 @@ class Crane {
 		void generate_new_position_and_direction();
 		void drop_crate();
 		void generate_crate();
+		void set_collision_detector(CollisionDetector* collision_detector);
 		static int handle_thread(void* arg);
+		~Crane();
 };
