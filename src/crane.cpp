@@ -160,11 +160,6 @@ int Crane::handle_thread(void* arg) {
 }
 
 
-void Crane::set_collision_detector(CollisionDetector* collision_detector) {
-	this->collision_detector = collision_detector;
-}
-
-
 Crane::~Crane() {
 	delete this->collision_detector;
 }
