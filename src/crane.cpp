@@ -92,7 +92,6 @@ void Crane::movement() {
 			this->move_to_right();
 		}
 	}
-
 }
 
 
@@ -113,12 +112,17 @@ void Crane::out_of_frame_waiting_time() {
 
 
 void Crane::generate_crate() {
-	this->holds_a_block = true;
-	this->current_block = new Block(this->renderer, this->textures, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
-	this->block_container->add_block(this->current_block);	
-
 	srand(time(NULL));
 	int random_int = rand() % 12;
+
+	while (this->block_container->get_number_of_blocks_on_column(random_int) == MAXIMUM_NUMBER_OF_BLOCKS_ON_COLUMN) {
+		random_int = rand() % 12;
+	}
+
+	this->holds_a_block = true;
+	this->current_block = new Block(this->renderer, this->textures, this->dstrect.x, this->dstrect.y + this->dstrect.h / 2);	
+	this->block_container->add_block(this->current_block, random_int);	
+		
 	std::cout << "Random int from Crane::generate_crate(): " << random_int << "\n";
 	this->x_coordinate_of_the_drop_target = random_int * this->current_block->get_width();
 }
@@ -144,7 +148,6 @@ void Crane::slide() {
 void Crane::draw() {
 	SDL_RenderCopy(this->renderer, this->texture, NULL, &this->dstrect);		
 } 
-
 
 
 int Crane::handle_thread(void* arg) {
