@@ -131,8 +131,6 @@ void Crane::drop_crate() {
 		this->current_block->set_as_landed();						
 	}
 
-	/// TODO: Check collision between the current block held by the crane and other blocks
-	/// placed under the current one.
 	this->holds_a_block = false;		
 }
 
