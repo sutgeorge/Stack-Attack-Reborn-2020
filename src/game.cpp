@@ -111,6 +111,11 @@ void Game::input_handling() {
 		}
 	}
 
+	if(SDL_GetTicks() - this->player->get_last_jump_time() > 500 && !player->is_falling() && keyboard_state[SDL_SCANCODE_W]) {
+		player->set_as_jumping();
+		player->set_last_jump_time(SDL_GetTicks());
+	}
+
 	if (keyboard_state[SDL_SCANCODE_A]) {
 		Uint32 player_frame_update_time = this->player->get_last_frame_update_time();
 		if (SDL_GetTicks() -  player_frame_update_time > 1000 / FPS) {
@@ -134,6 +139,8 @@ void Game::run() {
 	
 	while (this->running) {
 		this->input_handling();
+		this->player->jump();
+		this->player->fall();
 		this->render();			
 	}
 	

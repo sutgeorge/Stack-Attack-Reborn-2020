@@ -21,6 +21,12 @@ Player::Player(SDL_Renderer* renderer, Textures* textures) {
 	this->dstrect.h = this->frame.h;
 
 	this->last_frame_update_time = SDL_GetTicks();
+	this->last_jump_time = SDL_GetTicks();
+	this->jumping = false;
+	this->falling = false;
+	this->vertical_velocity = PLAYER_VELOCITY;
+	this->vertical_movement_update_time = SDL_GetTicks();
+	this->ground_level_y_coordinate = WINDOW_HEIGHT;
 	this->orientation = FACING_CENTER;
 }
 
@@ -42,6 +48,26 @@ void Player::set_last_frame_update_time(Uint32 new_time) {
 }
 
 
+Uint32 Player::get_last_jump_time() {
+	return this->last_jump_time;
+}
+
+
+void Player::set_last_jump_time(Uint32 new_time) {
+	this->last_jump_time = new_time;	
+}
+
+
+bool Player::is_falling() {
+	return this->falling;
+}
+
+
+void Player::set_as_jumping() {
+	this->jumping = true;
+}
+
+
 void Player::move_to_left() {
 	this->dstrect.x -= PLAYER_VELOCITY;	
 	this->orientation = FACING_LEFT;
@@ -56,6 +82,41 @@ void Player::move_to_right() {
 
 void Player::stand_still() {
 	this->orientation = FACING_CENTER;
+}
+
+
+void Player::jump() {
+	if(this->jumping) {
+		if(this->dstrect.y + this->frame.h <= this->ground_level_y_coordinate) {
+			if(SDL_GetTicks() - this->vertical_movement_update_time > 1000/FPS) {
+				this->vertical_movement_update_time = SDL_GetTicks();
+				this->dstrect.y -= this->vertical_velocity;
+				this->vertical_velocity--;
+			}
+		} else {
+			this->dstrect.y = this->ground_level_y_coordinate - this->frame.h;
+			this->vertical_velocity = PLAYER_VELOCITY;
+			this->jumping = false;
+		}
+	}	
+}
+
+
+void Player::fall() {
+	if(this->falling) {
+		if(this->dstrect.y + this->frame.h <= this->ground_level_y_coordinate) {
+			if(SDL_GetTicks() - this->vertical_movement_update_time > 1000 / FPS) {
+				this->vertical_movement_update_time = SDL_GetTicks();
+				this->dstrect.y += this->vertical_velocity;
+				this->vertical_velocity++;
+			}
+		} else {
+			this->dstrect.y = this->ground_level_y_coordinate - this->frame.h;
+			this->vertical_velocity = PLAYER_VELOCITY;
+			this->jumping = false;
+			this->falling = false;
+		}
+	}
 }
 
 
