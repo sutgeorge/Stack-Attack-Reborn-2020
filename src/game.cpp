@@ -49,6 +49,11 @@ void Game::initialize_test_block() {
 }
 
 
+void Game::initialize_player() {
+	this->player = new Player(this->renderer, this->textures);
+}
+
+
 Game::Game() {
 	this->initialize_window();
 	this->initialize_renderer();
@@ -57,6 +62,7 @@ Game::Game() {
 	this->initialize_pipe();
 	this->initialize_crane();
 	this->initialize_test_block();	
+	this->initialize_player();
 
 	if (this->initialization_failed) {
 		this->running = false;
@@ -73,6 +79,7 @@ Game::~Game() {
 	delete this->crane;
 	delete this->block;
 	delete this->block_container;
+	delete this->player;
 	delete this->textures;
 	SDL_DestroyWindow(this->window);
 	SDL_DestroyRenderer(this->renderer);	
@@ -85,6 +92,7 @@ void Game::render() {
 		SDL_RenderClear(this->renderer);
 		this->pipe->draw();		
 		this->crane->draw();
+		this->player->draw();
 		this->block_container->render_blocks();
 		SDL_RenderPresent(this->renderer);
 		this->last_frame_update_time = SDL_GetTicks();

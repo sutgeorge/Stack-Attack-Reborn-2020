@@ -19,6 +19,7 @@ class Game {
 		Pipe* pipe;	
 		Crane* crane;
 		Block* block;
+		Player* player;
 		///-------------- Threads ----------------
 		///pthread_t crane_thread; 
 		SDL_Thread* crane_thread;
@@ -36,6 +37,7 @@ class Game {
 		void initialize_pipe();
 		void initialize_crane();
 		void initialize_test_block();
+		void initialize_player();
         void render();
 		void input_handling();
 };
