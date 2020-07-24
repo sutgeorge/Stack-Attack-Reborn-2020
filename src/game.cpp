@@ -110,6 +110,20 @@ void Game::input_handling() {
 			this->running = false;
 		}
 	}
+
+	if (keyboard_state[SDL_SCANCODE_A]) {
+		Uint32 player_frame_update_time = this->player->get_last_frame_update_time();
+		if (SDL_GetTicks() -  player_frame_update_time > 1000 / FPS) {
+			this->player->set_last_frame_update_time(SDL_GetTicks());	
+			this->player->move_to_left();			
+		}
+	} else if (keyboard_state[SDL_SCANCODE_D]) {
+		Uint32 player_frame_update_time = this->player->get_last_frame_update_time();
+		if (SDL_GetTicks() -  player_frame_update_time > 1000 / FPS) {
+			this->player->set_last_frame_update_time(SDL_GetTicks());	
+			this->player->move_to_right();			
+		}
+	} 
 }
 
 

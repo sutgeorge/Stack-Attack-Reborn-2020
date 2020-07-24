@@ -19,6 +19,8 @@ Player::Player(SDL_Renderer* renderer, Textures* textures) {
 	this->dstrect.y = WINDOW_HEIGHT - this->frame.h;
 	this->dstrect.w = this->frame.w;
 	this->dstrect.h = this->frame.h;
+
+	this->last_frame_update_time = SDL_GetTicks();
 }
 
 
@@ -26,4 +28,24 @@ void Player::draw() {
 	//player->animate(player);
 	SDL_RenderCopy(this->renderer, this->spritesheet,
 	      		   &this->frame, &this->dstrect);
+}
+
+
+Uint32 Player::get_last_frame_update_time() {
+	return this->last_frame_update_time;
+}
+
+
+void Player::set_last_frame_update_time(Uint32 new_time) {
+	this->last_frame_update_time = new_time;
+}
+
+
+void Player::move_to_left() {
+	this->dstrect.x -= PLAYER_VELOCITY;	
+}
+
+
+void Player::move_to_right() {
+	this->dstrect.x += PLAYER_VELOCITY;	
 }
