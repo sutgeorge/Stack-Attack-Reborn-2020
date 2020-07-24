@@ -24,7 +24,7 @@ Player::Player(SDL_Renderer* renderer, Textures* textures) {
 	this->last_jump_time = SDL_GetTicks();
 	this->jumping = false;
 	this->falling = false;
-	this->vertical_velocity = PLAYER_VELOCITY;
+	this->vertical_velocity = VERTICAL_VELOCITY;
 	this->vertical_movement_update_time = SDL_GetTicks();
 	this->ground_level_y_coordinate = WINDOW_HEIGHT;
 	this->orientation = FACING_CENTER;
@@ -95,7 +95,7 @@ void Player::jump() {
 			}
 		} else {
 			this->dstrect.y = this->ground_level_y_coordinate - this->frame.h;
-			this->vertical_velocity = PLAYER_VELOCITY;
+			this->vertical_velocity = VERTICAL_VELOCITY;
 			this->jumping = false;
 		}
 	}	
@@ -112,7 +112,7 @@ void Player::fall() {
 			}
 		} else {
 			this->dstrect.y = this->ground_level_y_coordinate - this->frame.h;
-			this->vertical_velocity = PLAYER_VELOCITY;
+			this->vertical_velocity = VERTICAL_VELOCITY;
 			this->jumping = false;
 			this->falling = false;
 		}
