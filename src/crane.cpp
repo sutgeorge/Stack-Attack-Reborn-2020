@@ -2,9 +2,13 @@
 #include <cstdlib>
 #include <ctime>
 
+static bool CRANE_THREAD_RUNNING; 
+/// Give me a break, it's the only global variable I have.... 
+/// And it's static, private to the source file....
+
 Crane::Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container) {
 	int texture_w, texture_h;
-
+	CRANE_THREAD_RUNNING = true;	
 	this->renderer = renderer;
 	this->texture = textures->crane_texture;
 	this->textures = textures;
@@ -150,11 +154,18 @@ void Crane::draw() {
 } 
 
 
+void Crane::stop() {
+	CRANE_THREAD_RUNNING = false;	
+}
+
+
 int Crane::handle_thread(void* arg) {
 	Crane* crane = (Crane*)arg;
 		
 	while (crane->currently_sliding) {
 		crane->slide();	
+		if (!CRANE_THREAD_RUNNING)
+			crane->currently_sliding = false;
 	}		
 	
 	return 0;

@@ -32,6 +32,7 @@ class Crane {
 		void drop_crate();
 		void generate_crate();
 		void set_collision_detector(CollisionDetector* collision_detector);
+		void stop();
 		static int handle_thread(void* arg);
 		~Crane();
 };

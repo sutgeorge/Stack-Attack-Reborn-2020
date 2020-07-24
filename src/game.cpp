@@ -92,15 +92,28 @@ void Game::render() {
 }
 
 
+void Game::input_handling() {
+	const Uint8 *keyboard_state = SDL_GetKeyboardState(NULL);
+	SDL_Event event;
+
+	while(SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
+			this->crane->stop();
+			this->running = false;
+		}
+	}
+}
+
+
 void Game::run() {	
-	//pthread_create(&this->crane_thread, NULL, Crane::handle_thread, this->crane);			
 	this->crane_thread = SDL_CreateThread(Crane::handle_thread, "Crane thread", this->crane);		
 	
 	while (this->running) {
+		this->input_handling();
 		this->render();			
 	}
-
-	std::cout << "while loop stopped.\n"; 
-	//pthread_join(this->crane_thread, NULL);	
+	
+	crane->stop();	
 	SDL_WaitThread(this->crane_thread, NULL);
+	std::cout << "Stopped.\n";
 }

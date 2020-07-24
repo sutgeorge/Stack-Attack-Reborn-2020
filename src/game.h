@@ -37,4 +37,5 @@ class Game {
 		void initialize_crane();
 		void initialize_test_block();
         void render();
+		void input_handling();
 };
