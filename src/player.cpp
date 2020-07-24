@@ -21,11 +21,12 @@ Player::Player(SDL_Renderer* renderer, Textures* textures) {
 	this->dstrect.h = this->frame.h;
 
 	this->last_frame_update_time = SDL_GetTicks();
+	this->orientation = FACING_CENTER;
 }
 
 
 void Player::draw() {
-	//player->animate(player);
+	this->animate();
 	SDL_RenderCopy(this->renderer, this->spritesheet,
 	      		   &this->frame, &this->dstrect);
 }
@@ -43,9 +44,53 @@ void Player::set_last_frame_update_time(Uint32 new_time) {
 
 void Player::move_to_left() {
 	this->dstrect.x -= PLAYER_VELOCITY;	
+	this->orientation = FACING_LEFT;
 }
 
 
 void Player::move_to_right() {
 	this->dstrect.x += PLAYER_VELOCITY;	
+	this->orientation = FACING_RIGHT;
+}
+
+
+void Player::stand_still() {
+	this->orientation = FACING_CENTER;
+}
+
+
+void Player::animate() {
+	if (this->orientation == FACING_LEFT) {
+		this->left_animation();
+	} else if (this->orientation == FACING_RIGHT) {
+		this->right_animation();
+	} else {
+		this->center_animation();
+	}	
+}
+
+
+void Player::left_animation() {
+	if (SDL_GetTicks() - this->last_animation_update_time > 200) {
+		this->last_animation_update_time = SDL_GetTicks();
+		this->left_animation_frame_index = (this->left_animation_frame_index ? 0 : 1);
+		this->frame.x = this->frame.w * this->left_animation_frame_index;
+		this->frame.y = 0;		
+	}
+}
+
+
+void Player::right_animation() {	
+	if (SDL_GetTicks() - this->last_animation_update_time > 200) {
+		this->last_animation_update_time = SDL_GetTicks();
+		this->right_animation_frame_index = (this->right_animation_frame_index ? 0 : 1);
+		this->frame.x = this->frame.w * this->right_animation_frame_index;
+		this->frame.y = this->frame.h;		
+	}
+}
+
+
+void Player::center_animation() {
+	this->frame.x = 0;	
+	this->frame.y = this->frame.h * 2;	
 }

@@ -123,7 +123,9 @@ void Game::input_handling() {
 			this->player->set_last_frame_update_time(SDL_GetTicks());	
 			this->player->move_to_right();			
 		}
-	} 
+	} else {
+		this->player->stand_still();
+	}  
 }
 
 
