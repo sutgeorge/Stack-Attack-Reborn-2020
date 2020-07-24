@@ -3,8 +3,6 @@
 #include <ctime>
 
 static bool CRANE_THREAD_RUNNING; 
-/// Give me a break, it's the only global variable I have.... 
-/// And it's static, private to the source file....
 
 Crane::Crane(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container) {
 	int texture_w, texture_h;
