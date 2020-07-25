@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(SDL_Renderer* renderer, Textures* textures) {
+Player::Player(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container) {
 	int sheet_width, sheet_height;
 
 	this->renderer = renderer;
@@ -28,6 +28,8 @@ Player::Player(SDL_Renderer* renderer, Textures* textures) {
 	this->vertical_movement_update_time = SDL_GetTicks();
 	this->ground_level_y_coordinate = WINDOW_HEIGHT;
 	this->orientation = FACING_CENTER;
+	
+	this->collision_detector = new CollisionDetector(block_container);
 }
 
 
@@ -55,6 +57,36 @@ Uint32 Player::get_last_jump_time() {
 
 void Player::set_last_jump_time(Uint32 new_time) {
 	this->last_jump_time = new_time;	
+}
+
+
+int Player::get_x_coordinate() {
+	return this->dstrect.x;
+}
+
+
+int Player::get_y_coordinate() {
+	return this->dstrect.y;
+}
+
+
+int Player::get_width() {
+	return this->dstrect.w; 
+}
+
+
+int Player::get_left_side() {
+	return this->dstrect.x + this->dstrect.w / 5;
+}
+
+
+int Player::get_right_side() {
+	return this->dstrect.x + this->dstrect.w - this->dstrect.w / 5;
+}
+
+
+int Player::get_height() {	
+	return this->dstrect.h; 
 }
 
 
@@ -154,4 +186,22 @@ void Player::right_animation() {
 void Player::center_animation() {
 	this->frame.x = 0;	
 	this->frame.y = this->frame.h * 2;	
+}
+
+
+bool Player::check_collision_with_other_blocks() {
+	bool collided = this->collision_detector->check_player_collision_with_other_blocks(this);
+	
+	if (collided) {
+		std::cout << "collided!\n";
+	} else {
+		std::cout << "no collision!\n";
+	}
+	
+	return collided;
+}
+
+
+Player::~Player() {	
+	delete this->collision_detector;
 }

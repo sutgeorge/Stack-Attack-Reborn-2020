@@ -5,6 +5,38 @@ CollisionDetector::CollisionDetector(BlockContainer* block_container) {
 }
 
 
+bool CollisionDetector::player_block_collision(Player* player, Block* block) {	
+	int player_left = player->get_left_side();
+	int player_top = player->get_y_coordinate(); 
+	int player_bottom = player_top + player->get_height(); 	
+	int player_right = player->get_right_side();
+		
+	int block_width = block->get_width();
+	int block_left = block->get_x_coordinate();	
+	int block_top = block->get_y_coordinate();	
+	int block_bottom = block_top + block_width;	
+	int block_right = block_left + block_width;
+
+	if (player_left < block_right && player_right > block_left && player_top < block_bottom && player_bottom > block_top)
+		return true;
+	return false;
+}
+
+
+bool CollisionDetector::check_player_collision_with_other_blocks(Player* player) {
+	std::vector<Block*>::iterator block_container_it;
+	std::vector<Block*>* pointer_to_container = this->block_container->get_pointer_to_container();
+
+	for (block_container_it = pointer_to_container->begin(); block_container_it < pointer_to_container->end(); block_container_it++) {
+		if (this->player_block_collision(player, (*block_container_it))) {
+			return true;
+		}
+	}	
+	
+	return false;
+}
+
+
 bool CollisionDetector::collision_between_two_blocks(Block* first_block, Block* second_block) {	
 	int first_block_left = first_block->get_x_coordinate();
 	int first_block_top = first_block->get_y_coordinate(); 

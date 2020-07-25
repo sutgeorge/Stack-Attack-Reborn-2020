@@ -50,7 +50,7 @@ void Game::initialize_test_block() {
 
 
 void Game::initialize_player() {
-	this->player = new Player(this->renderer, this->textures);
+	this->player = new Player(this->renderer, this->textures, this->block_container);
 }
 
 
@@ -141,6 +141,7 @@ void Game::run() {
 		this->input_handling();
 		this->player->jump();
 		this->player->fall();
+		this->player->check_collision_with_other_blocks();		
 		this->render();			
 	}
 	

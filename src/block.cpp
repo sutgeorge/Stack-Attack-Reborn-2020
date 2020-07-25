@@ -36,8 +36,6 @@ void Block::fall() {
 		this->dstrect.y = WINDOW_HEIGHT - this->dstrect.h;	
 		this->falling = false;
 	}
-	
-	std::cout << "Current block's y coordinate: " << this->dstrect.y << "\n";
 }
 
 
