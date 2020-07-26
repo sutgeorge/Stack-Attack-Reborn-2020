@@ -1,6 +1,6 @@
 # Stack Attack Reborn 2020
-A C++ version of the old discontinued clone Stack Attack Reborn.
-This is a clone of the old Siemens A50 game Stack Attack.
+This is a C++ version of the old discontinued clone of the Siemens A50 game Stack Attack.
+ 
 
 ## To-do list
 - [X] Create Game class
@@ -18,4 +18,4 @@ This is a clone of the old Siemens A50 game Stack Attack.
 - [ ] Resolve player-block collision
 - [ ] Remove possible memory leaks
 
-
+![Screenshot](res/stack-attack.png)
