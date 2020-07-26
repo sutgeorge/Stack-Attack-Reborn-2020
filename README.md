@@ -1,8 +1,8 @@
-## Stack Attack Reborn 2020
+# Stack Attack Reborn 2020
 A C++ version of the old discontinued clone Stack Attack Reborn.
 This is a clone of the old Siemens A50 game Stack Attack.
 
-# To-do list
+## To-do list
 - [X] Create Game class
 - [X] Create Pipe class
 - [X] Create Crane class
