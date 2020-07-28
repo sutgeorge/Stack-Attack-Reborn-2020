@@ -4,6 +4,7 @@
 #include "constants.h"
 #include <vector>
 #include <iterator>
+#include <map>
 
 class BlockContainer {
 	private:
@@ -11,6 +12,7 @@ class BlockContainer {
 		SDL_Renderer* renderer;
 		int number_of_blocks_on_column[NUMBER_OF_COLUMNS];
 		int map[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
+		std::map<std::pair<int, int>, Block*> occupied_position;
 	
 	public:
 		BlockContainer(SDL_Renderer* renderer);	
