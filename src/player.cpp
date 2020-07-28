@@ -102,12 +102,18 @@ void Player::set_as_jumping() {
 
 
 void Player::move_to_left() {
+	if (this->block_container->is_tile_occupied(this->dstrect.x + this->dstrect.w / 4, this->dstrect.y - this->dstrect.h / 2)) {
+		return;	
+	}
 	this->dstrect.x -= PLAYER_VELOCITY;	
 	this->orientation = FACING_LEFT;
 }
 
 
 void Player::move_to_right() {
+	if (this->block_container->is_tile_occupied(this->dstrect.x + this->dstrect.w - this->dstrect.w / 4, this->dstrect.y - this->dstrect.h / 2)) {
+		return;	
+	}
 	this->dstrect.x += PLAYER_VELOCITY;	
 	this->orientation = FACING_RIGHT;
 }

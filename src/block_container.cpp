@@ -72,10 +72,14 @@ int BlockContainer::get_number_of_blocks_on_column(int column_index) {
 
 
 bool BlockContainer::is_tile_occupied(int x, int y) {
-	int tile_row = y / BLOCK_WIDTH;
+	int tile_row = 6 - y / BLOCK_WIDTH - 1;
 	int tile_column = x / BLOCK_WIDTH;
+	std::cout << "Tile (" << tile_row << ";" << tile_column << ") is "; 
 
-	if (map[tile_row][tile_column])
+	if (map[tile_row][tile_column]) {
+		std::cout << "occupied\n";
 		return true;
+	}
+	std::cout << "not occupied\n";
 	return false;
 }
