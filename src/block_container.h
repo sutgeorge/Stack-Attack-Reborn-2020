@@ -10,6 +10,7 @@ class BlockContainer {
 		std::vector<Block*> container;	
 		SDL_Renderer* renderer;
 		int number_of_blocks_on_column[NUMBER_OF_COLUMNS];
+		int map[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 	
 	public:
 		BlockContainer(SDL_Renderer* renderer);	
@@ -19,4 +20,5 @@ class BlockContainer {
 		std::vector<Block*>* get_pointer_to_container();
 		int get_number_of_blocks_on_column(int column_index);
 		int size();
+		bool is_tile_occupied(int x, int y);
 };

@@ -142,6 +142,7 @@ void Game::run() {
 		this->player->jump();
 		this->player->fall();
 		this->player->check_collision_with_other_blocks();		
+		this->player->get_tile();
 		this->render();			
 	}
 	

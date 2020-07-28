@@ -29,6 +29,7 @@ Player::Player(SDL_Renderer* renderer, Textures* textures, BlockContainer* block
 	this->ground_level_y_coordinate = WINDOW_HEIGHT;
 	this->orientation = FACING_CENTER;
 	
+	this->block_container = block_container;
 	this->collision_detector = new CollisionDetector(block_container);
 }
 
@@ -189,13 +190,19 @@ void Player::center_animation() {
 }
 
 
+void Player::get_tile() {	
+	//std::cout << this->dstrect.x + this->dstrect.w / 4 << " " << this->dstrect.y << "\n";
+	//std::cout << (this->dstrect.x + this->dstrect.w / 4) / BLOCK_WIDTH << " " << this->dstrect.y / BLOCK_WIDTH << "\n";
+}
+
+
 bool Player::check_collision_with_other_blocks() {
 	bool collided = this->collision_detector->check_player_collision_with_other_blocks(this);
 	
 	if (collided) {
-		std::cout << "collided!\n";
+		//std::cout << "collided!\n";
 	} else {
-		std::cout << "no collision!\n";
+		//std::cout << "no collision!\n";
 	}
 	
 	return collided;

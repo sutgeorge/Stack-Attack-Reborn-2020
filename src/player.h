@@ -17,6 +17,7 @@ class Player {
 		bool jumping, falling;
 		enum Orientation {FACING_LEFT, FACING_RIGHT, FACING_CENTER} orientation;
 		CollisionDetector* collision_detector;
+		BlockContainer* block_container;
 	
 	public:
 		Player(SDL_Renderer* renderer, Textures* textures, BlockContainer* block_container);
@@ -43,5 +44,6 @@ class Player {
 		void right_animation();
 		void center_animation();
 		bool check_collision_with_other_blocks();
+		void get_tile();
 		~Player();
 };
